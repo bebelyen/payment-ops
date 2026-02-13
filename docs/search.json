@@ -1,0 +1,86 @@
+[
+  {
+    "objectID": "column_case_study.html#subject-line-wire-return-investigation---wire_2qizqwwo3bxp4ap5nukfdjaxw4k",
+    "href": "column_case_study.html#subject-line-wire-return-investigation---wire_2qizqwwo3bxp4ap5nukfdjaxw4k",
+    "title": "Column Payment Ops Case Study",
+    "section": "Subject Line: Wire Return Investigation - wire_2QIZQwWo3bXp4aP5NUKFDJAXw4k",
+    "text": "Subject Line: Wire Return Investigation - wire_2QIZQwWo3bXp4aP5NUKFDJAXw4k\nGood afternoon,\nWe are sorry to hear that a return was triggered on your customer’s outgoing wire and apologize for any inconvenience this might have caused. Upon investigation the return was triggered by an INVALID ACCOUNT NUMBER.\nORIGINAL OUTGOING WIRE\n\nWire Transfer ID: wire_2QIP3WQNoEe583ciCS98XFBVqid\nSent at: 2023-05-25 18:05:26 UTC\nAmount: $183,639\n\nRETURNED WIRE\n\nWire Transfer ID: wire_2QIZQwWo3bXp4aP5NUKFDJAXw4k\nReturned at: 2023-05-25 19:30:44 UTC\nAmount: $183,639\nReason: INVALID ACCT ORG REF 202305250003\n\nLet us know if you have any questions or if we can assist you with anything else.\nSincerely,\nColumn Team"
+  },
+  {
+    "objectID": "column_case_study.html#queries-approach",
+    "href": "column_case_study.html#queries-approach",
+    "title": "Column Payment Ops Case Study",
+    "section": "Queries & Approach",
+    "text": "Queries & Approach\n\nSTEP 1: search matching requested wire\nSTEP 2: match amount and date from step 1, ensuring is_incoming = 0 (returned)\n\n\nWire Return SearchWire Return Match\n\n\n\nSELECT \n    wire_transfer_id,          \n    amount,\n    datetime(completed_at) as timestamp,                \n    bank_to_bank_message,\n    is_incoming \nFROM wire_transfers \nWHERE wire_transfer_id = 'wire_2QIZQwWo3bXp4aP5NUKFDJAXw4k';\n\n\n1 records\n\n\n\n\n\n\n\n\n\nwire_transfer_id\namount\ntimestamp\nbank_to_bank_message\nis_incoming\n\n\n\n\nwire_2QIZQwWo3bXp4aP5NUKFDJAXw4k\n183639\n2023-05-25 19:30:44\n{“fiToFI”: {“lineOne”: “RET OF YOUR FED IMAD 0525MMQFM”, “lineTwo”: “P2U000341 DTD 05/25/23 UTA DUE TO”, “lineFour”: “41”, “lineThree”: “INVALID ACCT ORG REF 202305250003”}}\n1\n\n\n\n\n\n\n\n\nSELECT \n    wire_transfer_id,           \n    amount,                  \n    datetime(completed_at) as timestamp,             \n    is_incoming               \nFROM wire_transfers \nWHERE amount = '183639'       \n  AND is_incoming = '0'      \n  AND date(completed_at) = '2023-05-25'; \n\n\n1 records\n\n\n\n\n\n\n\n\nwire_transfer_id\namount\ntimestamp\nis_incoming\n\n\n\n\nwire_2QIP3WQNoEe583ciCS98XFBVq1d\n183639\n2023-05-25 18:05:26\n0"
+  },
+  {
+    "objectID": "column_case_study.html#contacting-financial-inst.",
+    "href": "column_case_study.html#contacting-financial-inst.",
+    "title": "Column Payment Ops Case Study",
+    "section": "Contacting Financial Inst.",
+    "text": "Contacting Financial Inst.\n\nLook up receiving bank using routing number (061120084) using American Bankers Association (ABA).\nContact ACH Operations Department by finding official contact info (email/phone number) from their website’s ACH contact page\nIf no public contact information, call general number and ask to be transferred to ACH department"
+  },
+  {
+    "objectID": "column_case_study.html#email-to-financial-inst.",
+    "href": "column_case_study.html#email-to-financial-inst.",
+    "title": "Column Payment Ops Case Study",
+    "section": "Email to Financial Inst.",
+    "text": "Email to Financial Inst.\nSubject Line: ACH Return Investigation - Trace # 121145340551340\nGood afternoon ACH Department, \nI am reaching out from Column regarding an ACH transaction that was returned by your institution with a return code R23 (Credit Entry Refused by Receiver).\nTRANSACTION DETAILS:\n\nOriginal Trace Number: 121145340551340\nReturn Trace Number: 061120080831693\nEffective Date: May 1, 2023\nAmount: $500.00\nOriginator (our record): Dorothe Bauer-Holsten\nReceiver: Prof. Reza Trüb\n\nWe believe the discrepancy between what the customer saw the originating company name as “Soccer Club LLC” and “Dorothe Bauer-Holsten” (our record) to be the cause for the return.\nTo help us solve this, we would appreciate if you:\n\nReview your records and confirm the company name displayed (originator) for this transaction\nConfirm if there was any other additional company information that contained “Soccer Club LLC”\n\nThis information will help us work with the customer to ensure their information is formatted correctly to prevent this issue from arising again.\nThank you for your assistance.\nBest,\nColumn Team"
+  },
+  {
+    "objectID": "column_case_study.html#email-to-customer",
+    "href": "column_case_study.html#email-to-customer",
+    "title": "Column Payment Ops Case Study",
+    "section": "Email to Customer",
+    "text": "Email to Customer\nSubject Line: ACH Return Investigation - Transaction acht_2PBthBuXNLs5aeK0ceeCEJGY4SP\nHello [Customer Name],\nWe are writing in regards to the ACH transfer with ID acht_2PBthBuXNLs5aeK0ceeCEJGY4SP.\nUpon investigation we found that the transfer was returned by the receiving bank with return code R23 (Credit Entry Refused by Receiver) on 05/03/2023. This means the receiving account holder or their bank declined the incoming transfer.\nTRANSACTION DETAILS:\n\nAmount: $500.00\nEffective Date: May 1, 2023\nOriginator Name (our records): Dorothe Bauer-Holsten\nReceiver: Prof. Reza Trüb\nReceiving Bank Routing: 061120084\nTrace Number: 121145340551340\n\nYou mentioned the receiving bank showed “Soccer Club LLC” as the originator instead of “Dorothe Bauer-Holsten.” We’re investigating this with the receiving bank to understand exactly what information they had on file.\nPossible Causes:\n\nIf you’re processing payments on behalf of “Soccer Club LLC,” that information may have been included in the addenda or company entry description fields, which some banks display to their customers instead of the primary company name field.\nThere may have been a data mapping issue in how the originator information was submitted to us when initiating this transfer.\n\nWe are in contact with the receiving bank to understand their records of what the originator information was. In the meantime can you confirm:\n\nAre you processing this payment on behalf of “Soccer Club LLC” or another third party?\nWhat originator information did you intend to be displayed to the receiver?\nDo you have any relationship with “Soccer Club LLC”?\n\nOnce we hear back from the receiving bank, we’ll provide you with a full root cause analysis and recommendations for preventing this issue in future transactions.\nThe funds from this returned transaction have been credited back to your account.\nPlease let us know if you have any questions or additional information that might help with our investigation.\nBest regards,\nColumn Team"
+  },
+  {
+    "objectID": "column_case_study.html#queries-ideas",
+    "href": "column_case_study.html#queries-ideas",
+    "title": "Column Payment Ops Case Study",
+    "section": "Queries & Ideas",
+    "text": "Queries & Ideas\nISSUE\n\nReceiving bank shows ORIGINATOR COMPANY: Soccer Club LLC \nColumn shows ORIGINATOR COMPANY: Dorthe Bauer-Holsten\nACH RETURN CODE: R23, Credit Entry Refused by Receiver (trace #: 061120080831693)\n\nROOT CAUSE\n\nDiscrepancy in company name triggered receiver (or bank) to reject transaction\nPossible Reasons\n\nCustomer incorrectly entered information, putting “Soccer Club LLC” in fields\nDidn’t recognize “Soccer Club LLC” as legitimate sender\nACH had “Soccer Club LLC” under company description, but it overrode company name\n\n\n\nTransfer Return SearchTransfer Return Match\n\n\n\nSELECT \n    ach_transfer_id,\n    datetime(effective_on) as timestamp,\n    amount,\n    status,\n    company_name,\n    receiver_name,\n    company_id,\n    routing_number,\n    trace_number\nFROM ach_transfers\nWHERE ach_transfer_id = 'acht_2PBthBuXNLs5aeK0ceeCEJGY4SP';\n\n\n1 records\n\n\n\n\n\n\n\n\n\n\n\n\n\nach_transfer_id\ntimestamp\namount\nstatus\ncompany_name\nreceiver_name\ncompany_id\nrouting_number\ntrace_number\n\n\n\n\nacht_2PBthBuXNLs5aeK0ceeCEJGY4SP\n2023-05-01 07:00:00\n500\nreturned\nDorothe Bauer-Holsten\nProf. Reza Tr�b\n9121145349\n061120084\n121145340551340\n\n\n\n\n\n\n\n\nSELECT \n    ach_return_event_id,\n    ach_transfer_id,\n    return_code,\n    description,\n    datetime(created_at) as timestamp,\n    status\nFROM ach_returns\nWHERE ach_transfer_id = 'acht_2PBthBuXNLs5aeK0ceeCEJGY4SP'; \n\n\n1 records\n\n\n\n\n\n\n\n\n\n\nach_return_event_id\nach_transfer_id\nreturn_code\ndescription\ntimestamp\nstatus\n\n\n\n\n89298\nacht_2PBthBuXNLs5aeK0ceeCEJGY4SP\nR23\nCredit Entry Refused by Receiver (trace #: 061120080831693)\n2023-05-03 21:20:24\nINITIATED"
+  },
+  {
+    "objectID": "column_case_study.html#queries-approach-1",
+    "href": "column_case_study.html#queries-approach-1",
+    "title": "Column Payment Ops Case Study",
+    "section": "Queries & Approach",
+    "text": "Queries & Approach\n\nTransfer Trace SearchTransfer Alternative SearchRelated Customer SearchRelated Recipient Search\n\n\n\nSELECT \n    ach_transfer_id,\n    effective_on,\n    amount,\n    status,\n    is_incoming,\n    company_name AS column_customer,\n    receiver_name AS end_recipient,\n    company_id,\n    trace_number\nFROM ach_transfers\nWHERE trace_number = '091000018873580'\nAND amount = 289527.45;\n\n\n1 records\n\n\n\n\n\n\n\n\n\n\n\n\n\nach_transfer_id\neffective_on\namount\nstatus\nis_incoming\ncolumn_customer\nend_recipient\ncompany_id\ntrace_number\n\n\n\n\nacht_2PJ01uHSLNCOe2bZvud67EjHOty\n2023-05-04T07:00:00.000Z\n289527.45\nsettled\n1\nHerr Philipp Krebs\nPavel Schulz-Staude\n1800948598\n091000018873580\n\n\n\n\n\n\n\n\nSELECT \n    ach_transfer_id,\n    effective_on,\n    amount,\n    status,\n    is_incoming,\n    company_name AS column_customer,\n    receiver_name AS end_recipient,\n    company_id,\n    trace_number\nFROM ach_transfers\nWHERE trace_number = '091000018873580';\n\n\n1 records\n\n\n\n\n\n\n\n\n\n\n\n\n\nach_transfer_id\neffective_on\namount\nstatus\nis_incoming\ncolumn_customer\nend_recipient\ncompany_id\ntrace_number\n\n\n\n\nacht_2PJ01uHSLNCOe2bZvud67EjHOty\n2023-05-04T07:00:00.000Z\n289527.45\nsettled\n1\nHerr Philipp Krebs\nPavel Schulz-Staude\n1800948598\n091000018873580\n\n\n\n\n\n\n\n\nSELECT \n    ach_transfer_id,\n    effective_on,\n    amount,\n    status,\n    receiver_name,\n    trace_number\nFROM ach_transfers\nWHERE company_name = 'Herr Philipp Krebs'\nORDER BY effective_on DESC\nLIMIT 20;\n\n\nDisplaying records 1 - 10\n\n\n\n\n\n\n\n\n\n\nach_transfer_id\neffective_on\namount\nstatus\nreceiver_name\ntrace_number\n\n\n\n\nacht_2PJ01uHSLNCOe2bZvud67EjHOty\n2023-05-04T07:00:00.000Z\n289527.45\nsettled\nPavel Schulz-Staude\n091000018873580\n\n\nacht_2PIe3XRlDG8TQ7bunue0aobuwBz\n2023-05-04T07:00:00.000Z\n8.47\nsettled\nAmelie Weimer\n111000023055392\n\n\nacht_2PIe3YmsNParUx0n2c9nDsqJwO5\n2023-05-04T07:00:00.000Z\n5353.16\nsettled\nRosemarie Warmer\n111000023054098\n\n\nacht_2PIe3YrNRibKr66AeTZkjrBz674\n2023-05-04T07:00:00.000Z\n121374.11\nsettled\nHulda Rogge\n111000023055331\n\n\nacht_2PIe3Yw7zUxCydypDMDZKkedyON\n2023-05-04T07:00:00.000Z\n3803.91\nsettled\nCarla Wilms\n111000023052992\n\n\nacht_2PIe3ZCPCCeXljjGboDoejjEAwz\n2023-05-04T07:00:00.000Z\n20752.43\nsettled\nRichard L�wer\n111000023052833\n\n\nacht_2PIe3ZqBo6rMV52RnOGdRGDshIH\n2023-05-04T07:00:00.000Z\n2755.44\nsettled\nMirjana Peukert\n111000023052828\n\n\nacht_2PIe3aQ6UU0XyMrDeii5GIfOEpU\n2023-05-04T07:00:00.000Z\n20.96\nsettled\nHeinz-Werner Weitzel-Eimer\n111000023052767\n\n\nacht_2PIe3b5IlfB24cWFcDioAGEjVSs\n2023-05-04T07:00:00.000Z\n70655.57\nsettled\nStephanie Riehl-Stolze\n111000023054957\n\n\nacht_2PIe3bWvjarw2V7QcdqGt0f4YXn\n2023-05-04T07:00:00.000Z\n3466.37\nsettled\nHilmar Scheuermann B.Eng.\n111000023053501\n\n\n\n\n\n\n\n\nSELECT \n    ach_transfer_id,\n    effective_on,\n    amount,\n    status,\n    company_name AS column_customer,\n    trace_number\nFROM ach_transfers\nWHERE receiver_name = 'Pavel Schulz-Staude'\nORDER BY effective_on DESC;\n\n\n1 records\n\n\n\n\n\n\n\n\n\n\nach_transfer_id\neffective_on\namount\nstatus\ncolumn_customer\ntrace_number\n\n\n\n\nacht_2PJ01uHSLNCOe2bZvud67EjHOty\n2023-05-04T07:00:00.000Z\n289527.45\nsettled\nHerr Philipp Krebs\n091000018873580"
+  },
+  {
+    "objectID": "column_case_study.html#results",
+    "href": "column_case_study.html#results",
+    "title": "Column Payment Ops Case Study",
+    "section": "Results",
+    "text": "Results\nINCOMING ACH TRANSFER (to Column):\n\nACH Transfer ID: acht_2PJ01uHSLNCOe2bZvud67EjHOty\nTrace Number: 091000018873580\nAmount: $289,527.45\nEffective Date: May 4, 2023\nStatus: Settled\nTransfer Type: Incoming (received by Column customer)\nOriginating Bank: Wells Fargo\nColumn Customer (Receiver): Herr Philipp Krebs\nEnd Recipient: Pavel Schulz-Staude"
+  },
+  {
+    "objectID": "column_case_study.html#email-to-customer-1",
+    "href": "column_case_study.html#email-to-customer-1",
+    "title": "Column Payment Ops Case Study",
+    "section": "Email to Customer",
+    "text": "Email to Customer\nSubject Line: URGENT. FRAUD INVESTIGATION. ACH Transfer acht_2PJ01uHSLNCOe2bZvud67EjHOtyP\nHello Herr Philipp Krebs,\nWe are reaching out regarding an URGENT FRAUD INVESTIGATION related to incoming ACH transfer that your account received on 05/04/2023.\n\nACH Transfer ID: acht_2PJ01uHSLNCOe2bZvud67EjHOty\nTrace Number: 091000018873580\nAmount: $289,527.45\nEffective Date: May 4, 2023\nOriginating Bank: Wells Fargo\n\nWells Fargo reached out and reported that their customer was a victim of a Business Email Compromise (BEC) scam. They are alleging that this $289,527.45 transfer was unauthorized and fraudulent, and are requesting an IMMEDIATE return of these funds.\nTo determine the legitimacy of this transaction, we are launching an investigation and need the following evidence/information immediately:\n\nPayment authorization and verification:\n\nReceipt and reason of payment\nHow transaction was originally arranged (email, phone, etc)\n\nSender information:\n\nRelationship to Wells Fargo customer\nHow long you been doing business with this party\n\nRecipient information:\n\nPavel Schulz-Staude’s relationship to your business\nPast payments to Pavel Schulz-Staude\n\nDue diligence:\n\nDid you verify the sender’s identity and payment authorization?\nDid you notice anything unusual about the payment request/communication?\n\n\nIf you cannot provide satisfactory documentation that this was a legitimate transaction, we may be required to return the funds to Wells Fargo and suspend your account pending further investigation.\nPlease reply to this email with the requested information as soon as possible. You may also call us [### ### ####] to discuss this immediately.\nBest regards,\nColumn Team"
+  },
+  {
+    "objectID": "column_case_study.html#approach",
+    "href": "column_case_study.html#approach",
+    "title": "Column Payment Ops Case Study",
+    "section": "Approach",
+    "text": "Approach\nUse Google Workspace tools (Sheets, Gmail, Apps Script) to create centralized case management system. Standardizes cases with unique IDs, automates Gmail and Slack case related information, scraping relevant information, SLA monitoring, and maintains clear communication through all channels. Ensures nothing is missed without third-party software purchases.\n\nSet up Google Sheets by editing App Script to log:\n\nautomated email processing (every 5 mins)\nSLA monitoring & breach detection (hourly)\ncommunication\nSlack notifications\n\nConfigure Slack to process cases directly\n\nCheck case details\nView assigned cases\nUpdate status/notes\n\nIntegrate Gmail to forward payment-ops related emails to spreadsheet"
+  },
+  {
+    "objectID": "column_case_study.html#key-features",
+    "href": "column_case_study.html#key-features",
+    "title": "Column Payment Ops Case Study",
+    "section": "Key Features",
+    "text": "Key Features\n\nCase Tracking\n\nUnique case ID (MMDDYYYY-XXX)\nGmail and Slack linked\n\nCommunication: all emails/Slack messages logged and easily searchable\nSLA Monitoring\n\nAutomated breach alerts, at-risk flags\nHourly SLA checks\n\nAnalytics\n\nDashboard with cases by status, type, priority\nSLA compliance metric"
+  },
+  {
+    "objectID": "column_case_study.html#dashboard",
+    "href": "column_case_study.html#dashboard",
+    "title": "Column Payment Ops Case Study",
+    "section": "Dashboard",
+    "text": "Dashboard"
+  }
+]
