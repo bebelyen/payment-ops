@@ -3,7 +3,7 @@ title: "Column Payment Ops Case Study"
 author: "Bebel Yen"
 format:
   revealjs:
-    theme: default
+    theme: black
     slide-number: true
     echo: true
     scrollable: true 
@@ -41,6 +41,8 @@ We are sorry to hear that a return was triggered on your customer's outgoing wir
 -   Amount: \$183,639
 -   Reason: INVALID ACCT ORG REF 202305250003
 
+Please ask your customer to verify the account number and ensuring the routing number and bank are accurate. Once the correct information has been confirmed, a new wire transfer can be initiated. Funds from this returned wire have been credited back to your customer's account and are available for a new transfer.
+
 Let us know if you have any questions or if we can assist you with anything else.
 
 Sincerely,\
@@ -48,9 +50,9 @@ Column Team
 
 ## **Queries & Approach**
 
--   STEP 1: search matching requested wire
+-   Query 1: search matching requested wire
 
--   STEP 2: match amount and date from step 1, ensuring is_incoming = 0 (returned)
+-   Query 2: match amount and date from step 1, ensuring is_incoming = 0 (returned)
 
 ::: panel-tabset
 ## Wire Return Search
@@ -69,7 +71,7 @@ FROM wire_transfers
 WHERE wire_transfer_id = 'wire_2QIZQwWo3bXp4aP5NUKFDJAXw4k';
 ```
 
-## Wire Return Match 
+## Wire Return Match
 
 ```{sql}
 #| connection: con
@@ -98,7 +100,7 @@ WHERE amount = '183639'
 
 ## Email to Financial Inst.
 
-### **Subject Line:** ACH Return Investigation - Trace \# 121145340551340 
+### **Subject Line:** ACH Return Investigation - Trace \# 121145340551340
 
 Good afternoon ACH Department, 
 
@@ -129,7 +131,7 @@ This information will help us work with the customer to ensure their information
 
 Thank you for your assistance.
 
-Best, \
+Best,\
 Column Team
 
 ## Email to Customer
@@ -138,7 +140,7 @@ Column Team
 
 Hello \[Customer Name\],
 
-We are writing in regards to the ACH transfer with ID **acht_2PBthBuXNLs5aeK0ceeCEJGY4SP**.
+We are writing in regards to the ACH transfer with ID **acht_2PBthBuXNLs5aeK0ceeCEJGY4SP**
 
 Upon investigation we found that the transfer was returned by the receiving bank with return code **R23 (Credit Entry Refused by Receiver)** on 05/03/2023. This means the receiving account holder or their bank declined the incoming transfer.
 
@@ -222,7 +224,7 @@ FROM ach_transfers
 WHERE ach_transfer_id = 'acht_2PBthBuXNLs5aeK0ceeCEJGY4SP';
 ```
 
-## Transfer Return Match 
+## Transfer Return Match
 
 ```{sql}
 #| connection: con
@@ -245,6 +247,20 @@ WHERE ach_transfer_id = 'acht_2PBthBuXNLs5aeK0ceeCEJGY4SP';
 
 ## Queries & Approach
 
+-   Query 1: exact transaction
+
+-   Query 2: other transactions from same customer
+
+    -   Search for any patterns of large transfers or if this is unusual
+
+    -   FOUND: has other large transfers
+
+-   Query 3: other transactions to same receiver
+
+    -   Search if Pavel Schulz-Staude regularly receives payments through this Column customer
+
+    -   FOUND: first transaction
+
 ::: panel-tabset
 ## Transfer Trace Search
 
@@ -254,7 +270,7 @@ WHERE ach_transfer_id = 'acht_2PBthBuXNLs5aeK0ceeCEJGY4SP';
 
 SELECT 
     ach_transfer_id,
-    effective_on,
+    datetime(effective_on) as timestamp,
     amount,
     status,
     is_incoming,
@@ -267,25 +283,6 @@ WHERE trace_number = '091000018873580'
 AND amount = 289527.45;
 ```
 
-## Transfer Alternative Search 
-
-```{sql}
-#| connection: con
-#| label: transfer-alt-search
-SELECT 
-    ach_transfer_id,
-    effective_on,
-    amount,
-    status,
-    is_incoming,
-    company_name AS column_customer,
-    receiver_name AS end_recipient,
-    company_id,
-    trace_number
-FROM ach_transfers
-WHERE trace_number = '091000018873580';
-```
-
 ## Related Customer Search
 
 ```{sql}
@@ -294,18 +291,19 @@ WHERE trace_number = '091000018873580';
 
 SELECT 
     ach_transfer_id,
-    effective_on,
+    datetime(effective_on) as timestamp,
     amount,
     status,
-    receiver_name,
+    company_name AS column_customer,
+    receiver_name AS end_recipient,
     trace_number
 FROM ach_transfers
 WHERE company_name = 'Herr Philipp Krebs'
 ORDER BY effective_on DESC
-LIMIT 20;
+LIMIT 10;
 ```
 
-## Related Recipient Search 
+## Related Recipient Search
 
 ```{sql}
 #| connection: con
@@ -313,10 +311,11 @@ LIMIT 20;
 
 SELECT 
     ach_transfer_id,
-    effective_on,
+    datetime(effective_on) as timestamp,
     amount,
     status,
     company_name AS column_customer,
+    receiver_name AS end_recipient,
     trace_number
 FROM ach_transfers
 WHERE receiver_name = 'Pavel Schulz-Staude'
@@ -324,21 +323,21 @@ ORDER BY effective_on DESC;
 ```
 :::
 
-## Results 
+## Results
 
 INCOMING ACH TRANSFER (to Column):
 
--   ACH Transfer ID: `acht_2PJ01uHSLNCOe2bZvud67EjHOty`
+-   ACH Transfer ID: acht_2PJ01uHSLNCOe2bZvud67EjHOty
 
 -   Trace Number: 091000018873580
 
--   Amount: **\$289,527.45**
+-   Amount: \$289,527.45
 
 -   Effective Date: May 4, 2023
 
 -   Status: Settled
 
--   Transfer Type: **Incoming** (received by Column customer)
+-   Transfer Type: Incoming (received by Column customer)
 
 -   Originating Bank: Wells Fargo
 
@@ -373,7 +372,7 @@ To determine the legitimacy of this transaction, we are launching an investigati
 
     -   How transaction was originally arranged (email, phone, etc)
 2.  Sender information:
-    -    Relationship to Wells Fargo customer
+    -   Relationship to Wells Fargo customer
 
     -   How long you been doing business with this party
 3.  Recipient information:
@@ -389,7 +388,7 @@ If you cannot provide satisfactory documentation that this was a legitimate tran
 
 Please reply to this email with the requested information as soon as possible. You may also call us \[### \### ####\] to discuss this immediately.
 
-Best regards, \
+Best regards,\
 Column Team
 
 # PROBLEM 4
@@ -429,29 +428,32 @@ Use Google Workspace tools (Sheets, Gmail, Apps Script) to create centralized ca
 
     -   SLA compliance metric
 
-## Dashboard 
+## Dashboard
 
 ![](images/lol.jpeg)
 
-# LLM PROMPTS 
+# LLM PROMPTS
 
 General:
 
 1.  What program to use to explore databases?
 2.  General instructions on applying SQL to RStudio and Quarto presentations
 
-Question One:
-
-1.  
+Question One: N/A
 
 Question Two:
 
-1.  
+1.  Possible causes for discrepancy between originating company names between ACH transaction, causes R23 return.
 
 Question Three:
 
-1.  What steps are taken when BEC scam is being investigated?
+1.  Steps are taken when BEC scam is being investigated
 2.  What information is required (originator/receiver) when BEC scam is being investigated?
+
+Question Four:
+
+1.  Create interactive dashboard for Payment Operations, called Column Payment Ops. Home page should be Dashboard with tabs on the left: All Cases, Communications, SLA Tracking, Analytics. On dashboard, 4 metrics at top of screen: Open Cases, Resolved Today, At Risk, Avg Response Time (hr). Should all have correlated values corresponding, and small metric under comparing to yesterday/average/improvements. Below is Active Cases flagged by: My Cases, High Priority, At Risk. Searchable, scrollable table with columns: case ID, priority tag, status, customer, subject, assigned to, SLA status and time ago created. Add corresponding colors to tags.
+2.  
 
 ```{r}
 #| include: false
