@@ -31,17 +31,17 @@ We are sorry to hear that a return was triggered on your customer's outgoing wir
 **ORIGINAL OUTGOING WIRE**
 
 -   Wire Transfer ID: wire_2QIP3WQNoEe583ciCS98XFBVqid
--   Sent at: 2023-05-25 18:05:26 UTC
+-   Sent at: 2023-05-25 18:05:26
 -   Amount: \$183,639
 
 **RETURNED WIRE**
 
 -   Wire Transfer ID: wire_2QIZQwWo3bXp4aP5NUKFDJAXw4k
--   Returned at: 2023-05-25 19:30:44 UTC
+-   Returned at: 2023-05-25 19:30:44
 -   Amount: \$183,639
 -   Reason: INVALID ACCT ORG REF 202305250003
 
-Please ask your customer to verify the account number and ensuring the routing number and bank are accurate. Once the correct information has been confirmed, a new wire transfer can be initiated. Funds from this returned wire have been credited back to your customer's account and are available for a new transfer.
+Please ask your customer to verify the account number and ensure the routing number and bank are accurate. Once the information has been verified, a new wire transfer can be initiated. Funds from this returned wire have been credited back to your customer's account and are available for a new transfer.
 
 Let us know if you have any questions or if we can assist you with anything else.
 
@@ -110,7 +110,7 @@ I am reaching out from Column regarding an ACH transaction that was returned by 
 
 -   Original Trace Number: 121145340551340
 -   Return Trace Number: 061120080831693
--   Effective Date: May 1, 2023
+-   Date & Time: 2023-05-01 07:00:00
 -   Amount: \$500.00
 -   Originator (our record): Dorothe Bauer-Holsten
 -   Receiver: Prof. Reza Trüb
@@ -135,7 +135,7 @@ Column Team
 
 Hello \[Customer Name\],
 
-We are writing in regards to the ACH transfer with ID **acht_2PBthBuXNLs5aeK0ceeCEJGY4SP**
+We are writing in regards to the ACH transfer with ID acht_2PBthBuXNLs5aeK0ceeCEJGY4SP
 
 Upon investigation we found that the transfer was returned by the receiving bank with return code **R23 (Credit Entry Refused by Receiver)** on 05/03/2023. This means the receiving account holder or their bank declined the incoming transfer.
 
@@ -148,11 +148,11 @@ Upon investigation we found that the transfer was returned by the receiving bank
 -   Receiving Bank Routing: 061120084
 -   Trace Number: 121145340551340
 
-You mentioned the receiving bank showed "Soccer Club LLC" as the originator instead of "Dorothe Bauer-Holsten." We're investigating this with the receiving bank to understand exactly what information they had on file.
+You mentioned the receiving bank showed "Soccer Club LLC" as the originator instead of "Dorothe Bauer-Holsten." We're investigating this with the receiving bank to understand what information they had on file.
 
 **Possible Causes:**
 
-1.  If you're processing payments on behalf of "Soccer Club LLC," that information may have been included in the addenda or company entry description fields, which some banks display to their customers instead of the primary company name field.
+1.  If you're processing payments on behalf of "Soccer Club LLC," that information may have been included in description fields, which some banks display to their customers instead of the primary company name field.
 
 2.  There may have been a data mapping issue in how the originator information was submitted to us when initiating this transfer.
 
@@ -225,8 +225,6 @@ SELECT
 FROM ach_returns
 WHERE ach_transfer_id = 'acht_2PBthBuXNLs5aeK0ceeCEJGY4SP'; 
 ```
-
-# 
 :::
 
 # PROBLEM 3
@@ -235,7 +233,7 @@ WHERE ach_transfer_id = 'acht_2PBthBuXNLs5aeK0ceeCEJGY4SP';
 
 -   Query 1: exact transaction
 -   Query 2: other transactions from same customer
-    -   Search for any patterns of large transfers or if this is unusual
+    -   Search for any patterns of large transfers or if this is unusual (sort by largest)
     -   FOUND: has other large transfers
 -   Query 3: other transactions to same receiver
     -   Search if Pavel Schulz-Staude regularly receives payments through this Column customer
@@ -322,7 +320,7 @@ INCOMING ACH TRANSFER (to Column):
 
 ### Subject Line: URGENT. FRAUD INVESTIGATION. ACH Transfer acht_2PJ01uHSLNCOe2bZvud67EjHOtyP
 
-Hello Herr Philipp Krebs,
+Good afternoon Herr Philipp Krebs,
 
 We are reaching out regarding an URGENT FRAUD INVESTIGATION related to incoming ACH transfer that your account received on 05/04/2023.
 
@@ -338,14 +336,12 @@ To determine the legitimacy of this transaction, we are launching an investigati
 
 1.  Payment authorization and verification:
     -   Receipt and reason of payment
-
     -   How transaction was originally arranged (email, phone, etc)
 2.  Sender information:
     -   Relationship to Wells Fargo customer
     -   How long you been doing business with this party
 3.  Recipient information:
     -   Pavel Schulz-Staude's relationship to your business
-
     -   Past payments to Pavel Schulz-Staude
 4.  Due diligence:
     -   Did you verify the sender's identity and payment authorization?
@@ -370,6 +366,7 @@ Monday Morning, 9:00 AM
 -   Slack notification sent to #payment-ops channel
 
     -   Summary of open cases, new overnight/weekend, at-risk items
+    -   Announces assignments are, scaled with urgency
 
 <!-- -->
 
@@ -623,7 +620,7 @@ Question Three:
 ##  Question Four (cont.)
 
 3.  Create interactive dashboard for Payment Operations, called Column Payment Ops. Home page should be Dashboard with tabs on the left: All Cases, Communications, SLA Tracking, Analytics. On dashboard, 4 metrics at top of screen: Open Cases, Resolved Today, At Risk, Avg Response Time (hr). Should all have correlated values corresponding, and small metric under comparing to yesterday/average/improvements. Below is Active Cases flagged by: My Cases, High Priority, At Risk. Searchable, scrollable table with columns: case ID, priority tag, status, customer, subject, assigned to, SLA status and time ago created. Add corresponding colors to tags.
-4.  Given following pseudo code, give script for email to case automation in Google Apps Script
+4.  Given my pseudo code, give script for email to case automation in Google Apps Script
     -   Every 5 minutes: Get all unread emails sent to payment-ops\@column.com
 
     -   For each email:
