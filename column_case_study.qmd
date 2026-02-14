@@ -320,7 +320,7 @@ INCOMING ACH TRANSFER (to Column):
 
 ### Subject Line: URGENT. FRAUD INVESTIGATION. ACH Transfer acht_2PJ01uHSLNCOe2bZvud67EjHOtyP
 
-Good afternoon Herr Philipp Krebs,
+Good afternoon Mr. Krebs,
 
 We are reaching out regarding an URGENT FRAUD INVESTIGATION related to incoming ACH transfer that your account received on 05/04/2023.
 
@@ -330,7 +330,7 @@ We are reaching out regarding an URGENT FRAUD INVESTIGATION related to incoming 
 -   Effective Date: May 4, 2023
 -   Originating Bank: Wells Fargo
 
-Wells Fargo reached out and reported that their customer was a victim of a [Business Email Compromise (BEC)](https://www.fbi.gov/how-we-can-help-you/scams-and-safety/common-frauds-and-scams/business-email-compromise) scam. They are alleging that this **\$289,527.45** transfer was unauthorized and fraudulent, and are requesting an IMMEDIATE return of these funds.
+Wells Fargo reached out and reported that their customer was a victim of a [Business Email Compromise (BEC)](https://www.fbi.gov/how-we-can-help-you/scams-and-safety/common-frauds-and-scams/business-email-compromise) scam. They are alleging that this **\$289,527.45** transfer was unauthorized and fraudulent, and are requesting an immediate return of these funds.
 
 To determine the legitimacy of this transaction, we are launching an investigation and need the following evidence/information immediately:
 
@@ -366,13 +366,13 @@ Monday Morning, 9:00 AM
 -   Slack notification sent to #payment-ops channel
 
     -   Summary of open cases, new overnight/weekend, at-risk items
-    -   Announces assignments are, scaled with urgency
+    -   Announces assignments are live
 
 <!-- -->
 
 -   Jane logs into dashboard:
 
-    -   Personalized view shows 8 assigned cases, sorted by SLA urgency, tagged with key words
+    -   Personalized view shows assigned cases, sorted by SLA urgency, tagged with key words
     -   Wire transfer issue with 2 hours remaining, highlighted in red at the top, Slack notification about time warning
 
 -   Mike's Slack status set to SICK
@@ -457,9 +457,29 @@ Use Google Workspace tools (Sheets, Gmail, Apps Script) to create centralized ca
 ```
 :::
 
-## Automation Example: Email Processing
+## Automation Example: Gmail Processing
 
-**Gmail Auto-Processing (Run Every 5 Minutes)**
+::::: columns
+::: {.column width="40%"}
+### Psuedocode
+
+1.  Every 5 minutes: Get all unread emails sent to payment-ops\@column.com
+2.  For each email:
+    -   Check if already created a case for this email thread
+    -   If no case exists:
+        -   Extract information from email
+        -   Detect priority (check for "urgent" keywords)
+        -   Detect case type (wire, ACH, etc.)
+        -   Get customer name and email
+        -   Get email subject and body
+    -   Create new case with extracted information
+    -   Mark email as processed (add label, mark as read)
+    -   Send notification to team via Slack
+3.  End
+:::
+
+::: {.column width="60%"}
+### Code
 
 ``` javascript
 function processInboundEmails() {
@@ -471,28 +491,34 @@ function processInboundEmails() {
     const firstMessage = thread.getMessages()[0];
     const threadId = thread.getId();
     
-    // checks if case already exists for this thread
+    // checks if case already exists
     if (!caseExistsForThread(threadId)) {
       // extracting info 
       const caseData = {
         priority: detectPriority(firstMessage.getSubject()),
         caseType: detectType(firstMessage.getSubject()),
-        customerName: firstMessage.getFrom().split('<')[0].trim(),
-        customerEmail: extractEmail(firstMessage.getFrom()),
+        customerName: firstMessage.getFrom()
+          .split('<')[0].trim(),
+        customerEmail: extractEmail(
+          firstMessage.getFrom()),
         subject: firstMessage.getSubject(),
-        description: firstMessage.getPlainBody().substring(0, 500),
+        description: firstMessage.getPlainBody()
+          .substring(0, 500),
         gmailThreadId: threadId
       };
       
       const caseId = createNewCase(caseData);
       
       // label email, mark as read
-      thread.addLabel(GmailApp.getUserLabelByName('Payment Ops Cases'));
+      thread.addLabel(GmailApp
+        .getUserLabelByName('Payment Ops Cases'));
       thread.markRead();
     }
   });
 }
 ```
+:::
+:::::
 
 # LLM PROMPTS
 

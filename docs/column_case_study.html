@@ -1011,7 +1011,7 @@ Column Team</p>
 <section id="email-to-customer-1" class="slide level2 scrollable">
 <h2>Email to Customer</h2>
 <h3 id="subject-line-urgent.-fraud-investigation.-ach-transfer-acht_2pj01uhslncoe2bzvud67ejhotyp">Subject Line: URGENT. FRAUD INVESTIGATION. ACH Transfer acht_2PJ01uHSLNCOe2bZvud67EjHOtyP</h3>
-<p>Good afternoon Herr Philipp Krebs,</p>
+<p>Good afternoon Mr.&nbsp;Krebs,</p>
 <p>We are reaching out regarding an URGENT FRAUD INVESTIGATION related to incoming ACH transfer that your account received on 05/04/2023.</p>
 <ul>
 <li>ACH Transfer ID: acht_2PJ01uHSLNCOe2bZvud67EjHOty</li>
@@ -1020,7 +1020,7 @@ Column Team</p>
 <li>Effective Date: May 4, 2023</li>
 <li>Originating Bank: Wells Fargo</li>
 </ul>
-<p>Wells Fargo reached out and reported that their customer was a victim of a <a href="https://www.fbi.gov/how-we-can-help-you/scams-and-safety/common-frauds-and-scams/business-email-compromise">Business Email Compromise (BEC)</a> scam. They are alleging that this <strong>$289,527.45</strong> transfer was unauthorized and fraudulent, and are requesting an IMMEDIATE return of these funds.</p>
+<p>Wells Fargo reached out and reported that their customer was a victim of a <a href="https://www.fbi.gov/how-we-can-help-you/scams-and-safety/common-frauds-and-scams/business-email-compromise">Business Email Compromise (BEC)</a> scam. They are alleging that this <strong>$289,527.45</strong> transfer was unauthorized and fraudulent, and are requesting an immediate return of these funds.</p>
 <p>To determine the legitimacy of this transaction, we are launching an investigation and need the following evidence/information immediately:</p>
 <ol type="1">
 <li>Payment authorization and verification:
@@ -1062,14 +1062,14 @@ Column Team</p>
 <li><p>Slack notification sent to #payment-ops channel</p>
 <ul>
 <li>Summary of open cases, new overnight/weekend, at-risk items</li>
-<li>Announces assignments are, scaled with urgency</li>
+<li>Announces assignments are live</li>
 </ul></li>
 </ul>
 <!-- -->
 <ul>
 <li><p>Jane logs into dashboard:</p>
 <ul>
-<li>Personalized view shows 8 assigned cases, sorted by SLA urgency, tagged with key words</li>
+<li>Personalized view shows assigned cases, sorted by SLA urgency, tagged with key words</li>
 <li>Wire transfer issue with 2 hours remaining, highlighted in red at the top, Slack notification about time warning</li>
 </ul></li>
 <li><p>Mike’s Slack status set to SICK</p>
@@ -1157,9 +1157,32 @@ Column Team</p>
 </iframe>
 </div>
 </section>
-<section id="automation-example-email-processing" class="slide level2">
-<h2>Automation Example: Email Processing</h2>
-<p><strong>Gmail Auto-Processing (Run Every 5 Minutes)</strong></p>
+<section id="automation-example-gmail-processing" class="slide level2 scrollable">
+<h2>Automation Example: Gmail Processing</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<h3 id="psuedocode">Psuedocode</h3>
+<ol type="1">
+<li>Every 5 minutes: Get all unread emails sent to payment-ops@column.com</li>
+<li>For each email:
+<ul>
+<li>Check if already created a case for this email thread</li>
+<li>If no case exists:
+<ul>
+<li>Extract information from email</li>
+<li>Detect priority (check for “urgent” keywords)</li>
+<li>Detect case type (wire, ACH, etc.)</li>
+<li>Get customer name and email</li>
+<li>Get email subject and body</li>
+</ul></li>
+<li>Create new case with extracted information</li>
+<li>Mark email as processed (add label, mark as read)</li>
+<li>Send notification to team via Slack</li>
+</ul></li>
+<li>End</li>
+</ol>
+</div><div class="column" style="width:60%;">
+<h3 id="code">Code</h3>
 <div class="sourceCode" id="cb8"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a></a><span class="kw">function</span> <span class="fu">processInboundEmails</span>() {</span>
 <span id="cb8-2"><a></a>  <span class="co">// searches for unprocessed payment ops emails</span></span>
 <span id="cb8-3"><a></a>  <span class="kw">const</span> query <span class="op">=</span> <span class="st">'to:payment-ops@column.com is:unread'</span><span class="op">;</span></span>
@@ -1169,27 +1192,32 @@ Column Team</p>
 <span id="cb8-7"><a></a>    <span class="kw">const</span> firstMessage <span class="op">=</span> thread<span class="op">.</span><span class="fu">getMessages</span>()[<span class="dv">0</span>]<span class="op">;</span></span>
 <span id="cb8-8"><a></a>    <span class="kw">const</span> threadId <span class="op">=</span> thread<span class="op">.</span><span class="fu">getId</span>()<span class="op">;</span></span>
 <span id="cb8-9"><a></a>    </span>
-<span id="cb8-10"><a></a>    <span class="co">// checks if case already exists for this thread</span></span>
+<span id="cb8-10"><a></a>    <span class="co">// checks if case already exists</span></span>
 <span id="cb8-11"><a></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">caseExistsForThread</span>(threadId)) {</span>
 <span id="cb8-12"><a></a>      <span class="co">// extracting info </span></span>
 <span id="cb8-13"><a></a>      <span class="kw">const</span> caseData <span class="op">=</span> {</span>
 <span id="cb8-14"><a></a>        <span class="dt">priority</span><span class="op">:</span> <span class="fu">detectPriority</span>(firstMessage<span class="op">.</span><span class="fu">getSubject</span>())<span class="op">,</span></span>
 <span id="cb8-15"><a></a>        <span class="dt">caseType</span><span class="op">:</span> <span class="fu">detectType</span>(firstMessage<span class="op">.</span><span class="fu">getSubject</span>())<span class="op">,</span></span>
-<span id="cb8-16"><a></a>        <span class="dt">customerName</span><span class="op">:</span> firstMessage<span class="op">.</span><span class="fu">getFrom</span>()<span class="op">.</span><span class="fu">split</span>(<span class="st">'&lt;'</span>)[<span class="dv">0</span>]<span class="op">.</span><span class="fu">trim</span>()<span class="op">,</span></span>
-<span id="cb8-17"><a></a>        <span class="dt">customerEmail</span><span class="op">:</span> <span class="fu">extractEmail</span>(firstMessage<span class="op">.</span><span class="fu">getFrom</span>())<span class="op">,</span></span>
-<span id="cb8-18"><a></a>        <span class="dt">subject</span><span class="op">:</span> firstMessage<span class="op">.</span><span class="fu">getSubject</span>()<span class="op">,</span></span>
-<span id="cb8-19"><a></a>        <span class="dt">description</span><span class="op">:</span> firstMessage<span class="op">.</span><span class="fu">getPlainBody</span>()<span class="op">.</span><span class="fu">substring</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">500</span>)<span class="op">,</span></span>
-<span id="cb8-20"><a></a>        <span class="dt">gmailThreadId</span><span class="op">:</span> threadId</span>
-<span id="cb8-21"><a></a>      }<span class="op">;</span></span>
-<span id="cb8-22"><a></a>      </span>
-<span id="cb8-23"><a></a>      <span class="kw">const</span> caseId <span class="op">=</span> <span class="fu">createNewCase</span>(caseData)<span class="op">;</span></span>
-<span id="cb8-24"><a></a>      </span>
-<span id="cb8-25"><a></a>      <span class="co">// label email, mark as read</span></span>
-<span id="cb8-26"><a></a>      thread<span class="op">.</span><span class="fu">addLabel</span>(GmailApp<span class="op">.</span><span class="fu">getUserLabelByName</span>(<span class="st">'Payment Ops Cases'</span>))<span class="op">;</span></span>
-<span id="cb8-27"><a></a>      thread<span class="op">.</span><span class="fu">markRead</span>()<span class="op">;</span></span>
-<span id="cb8-28"><a></a>    }</span>
-<span id="cb8-29"><a></a>  })<span class="op">;</span></span>
-<span id="cb8-30"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-16"><a></a>        <span class="dt">customerName</span><span class="op">:</span> firstMessage<span class="op">.</span><span class="fu">getFrom</span>()</span>
+<span id="cb8-17"><a></a>          <span class="op">.</span><span class="fu">split</span>(<span class="st">'&lt;'</span>)[<span class="dv">0</span>]<span class="op">.</span><span class="fu">trim</span>()<span class="op">,</span></span>
+<span id="cb8-18"><a></a>        <span class="dt">customerEmail</span><span class="op">:</span> <span class="fu">extractEmail</span>(</span>
+<span id="cb8-19"><a></a>          firstMessage<span class="op">.</span><span class="fu">getFrom</span>())<span class="op">,</span></span>
+<span id="cb8-20"><a></a>        <span class="dt">subject</span><span class="op">:</span> firstMessage<span class="op">.</span><span class="fu">getSubject</span>()<span class="op">,</span></span>
+<span id="cb8-21"><a></a>        <span class="dt">description</span><span class="op">:</span> firstMessage<span class="op">.</span><span class="fu">getPlainBody</span>()</span>
+<span id="cb8-22"><a></a>          <span class="op">.</span><span class="fu">substring</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">500</span>)<span class="op">,</span></span>
+<span id="cb8-23"><a></a>        <span class="dt">gmailThreadId</span><span class="op">:</span> threadId</span>
+<span id="cb8-24"><a></a>      }<span class="op">;</span></span>
+<span id="cb8-25"><a></a>      </span>
+<span id="cb8-26"><a></a>      <span class="kw">const</span> caseId <span class="op">=</span> <span class="fu">createNewCase</span>(caseData)<span class="op">;</span></span>
+<span id="cb8-27"><a></a>      </span>
+<span id="cb8-28"><a></a>      <span class="co">// label email, mark as read</span></span>
+<span id="cb8-29"><a></a>      thread<span class="op">.</span><span class="fu">addLabel</span>(GmailApp</span>
+<span id="cb8-30"><a></a>        <span class="op">.</span><span class="fu">getUserLabelByName</span>(<span class="st">'Payment Ops Cases'</span>))<span class="op">;</span></span>
+<span id="cb8-31"><a></a>      thread<span class="op">.</span><span class="fu">markRead</span>()<span class="op">;</span></span>
+<span id="cb8-32"><a></a>    }</span>
+<span id="cb8-33"><a></a>  })<span class="op">;</span></span>
+<span id="cb8-34"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
 </section></section>
 <section>
 <section id="llm-prompts" class="title-slide slide level1 center scrollable">
