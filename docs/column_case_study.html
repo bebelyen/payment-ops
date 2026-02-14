@@ -545,12 +545,12 @@ Column Team</p>
 <p>I am reaching out from Column regarding an ACH transaction that was returned by your institution with a return code R23 (Credit Entry Refused by Receiver).</p>
 <p><strong>TRANSACTION DETAILS:</strong></p>
 <ul>
-<li><p>Original Trace Number: 121145340551340</p></li>
-<li><p>Return Trace Number: 061120080831693</p></li>
-<li><p>Effective Date: May 1, 2023</p></li>
-<li><p>Amount: $500.00</p></li>
-<li><p>Originator (our record): Dorothe Bauer-Holsten</p></li>
-<li><p>Receiver: Prof.&nbsp;Reza Trüb</p></li>
+<li>Original Trace Number: 121145340551340</li>
+<li>Return Trace Number: 061120080831693</li>
+<li>Effective Date: May 1, 2023</li>
+<li>Amount: $500.00</li>
+<li>Originator (our record): Dorothe Bauer-Holsten</li>
+<li>Receiver: Prof.&nbsp;Reza Trüb</li>
 </ul>
 <p>We believe the discrepancy between what the customer saw the originating company name as “Soccer Club LLC” and “Dorothe Bauer-Holsten” (our record) to be the cause for the return.</p>
 <p>To help us solve this, we would appreciate if you:</p>
@@ -571,12 +571,12 @@ Column Team</p>
 <p>Upon investigation we found that the transfer was returned by the receiving bank with return code <strong>R23 (Credit Entry Refused by Receiver)</strong> on 05/03/2023. This means the receiving account holder or their bank declined the incoming transfer.</p>
 <p><strong>TRANSACTION DETAILS:</strong></p>
 <ul>
-<li><p>Amount: $500.00</p></li>
-<li><p>Effective Date: May 1, 2023</p></li>
-<li><p>Originator Name (our records): Dorothe Bauer-Holsten</p></li>
-<li><p>Receiver: Prof.&nbsp;Reza Trüb</p></li>
-<li><p>Receiving Bank Routing: 061120084</p></li>
-<li><p>Trace Number: 121145340551340</p></li>
+<li>Amount: $500.00</li>
+<li>Effective Date: May 1, 2023</li>
+<li>Originator Name (our records): Dorothe Bauer-Holsten</li>
+<li>Receiver: Prof.&nbsp;Reza Trüb</li>
+<li>Receiving Bank Routing: 061120084</li>
+<li>Trace Number: 121145340551340</li>
 </ul>
 <p>You mentioned the receiving bank showed “Soccer Club LLC” as the originator instead of “Dorothe Bauer-Holsten.” We’re investigating this with the receiving bank to understand exactly what information they had on file.</p>
 <p><strong>Possible Causes:</strong></p>
@@ -600,14 +600,14 @@ Column Team</p>
 <h2>Queries &amp; Ideas</h2>
 <p><strong>ISSUE</strong></p>
 <ul>
-<li><p>Receiving bank shows ORIGINATOR COMPANY: Soccer Club LLC&nbsp;</p></li>
-<li><p>Column shows ORIGINATOR COMPANY: Dorthe Bauer-Holsten</p></li>
-<li><p>ACH RETURN CODE: R23, Credit Entry Refused by Receiver (trace #: 061120080831693)</p></li>
+<li>Receiving bank shows ORIGINATOR COMPANY: Soccer Club LLC&nbsp;</li>
+<li>Column shows ORIGINATOR COMPANY: Dorthe Bauer-Holsten</li>
+<li>ACH RETURN CODE: R23, Credit Entry Refused by Receiver (trace #: 061120080831693)</li>
 </ul>
 <p><strong>ROOT CAUSE</strong></p>
 <ul>
-<li><p>Discrepancy in company name triggered receiver (or bank) to reject transaction</p></li>
-<li><p>Possible Reasons</p>
+<li>Discrepancy in company name triggered receiver (or bank) to reject transaction</li>
+<li>Possible Reasons
 <ul>
 <li><p>Customer incorrectly entered information, putting “Soccer Club LLC” in fields</p></li>
 <li><p>Didn’t recognize “Soccer Club LLC” as legitimate sender</p></li>
@@ -737,13 +737,13 @@ Column Team</p>
 <section id="queries-approach-1" class="slide level2">
 <h2>Queries &amp; Approach</h2>
 <ul>
-<li><p>Query 1: exact transaction</p></li>
-<li><p>Query 2: other transactions from same customer</p>
+<li>Query 1: exact transaction</li>
+<li>Query 2: other transactions from same customer
 <ul>
-<li><p>Search for any patterns of large transfers or if this is unusual</p></li>
-<li><p>FOUND: has other large transfers</p></li>
+<li>Search for any patterns of large transfers or if this is unusual</li>
+<li>FOUND: has other large transfers</li>
 </ul></li>
-<li><p>Query 3: other transactions to same receiver</p>
+<li>Query 3: other transactions to same receiver
 <ul>
 <li><p>Search if Pavel Schulz-Staude regularly receives payments through this Column customer</p></li>
 <li><p>FOUND: first transaction</p></li>
@@ -1002,15 +1002,15 @@ Column Team</p>
 <h2>Results</h2>
 <p>INCOMING ACH TRANSFER (to Column):</p>
 <ul>
-<li><p>ACH Transfer ID: acht_2PJ01uHSLNCOe2bZvud67EjHOty</p></li>
-<li><p>Trace Number: 091000018873580</p></li>
-<li><p>Amount: $289,527.45</p></li>
-<li><p>Effective Date: May 4, 2023</p></li>
-<li><p>Status: Settled</p></li>
-<li><p>Transfer Type: Incoming (received by Column customer)</p></li>
-<li><p>Originating Bank: Wells Fargo</p></li>
-<li><p>Column Customer (Receiver): Herr Philipp Krebs</p></li>
-<li><p>End Recipient: Pavel Schulz-Staude</p></li>
+<li>ACH Transfer ID: acht_2PJ01uHSLNCOe2bZvud67EjHOty</li>
+<li>Trace Number: 091000018873580</li>
+<li>Amount: $289,527.45</li>
+<li>Effective Date: May 4, 2023</li>
+<li>Status: Settled</li>
+<li>Transfer Type: Incoming (received by Column customer)</li>
+<li>Originating Bank: Wells Fargo</li>
+<li>Column Customer (Receiver): Herr Philipp Krebs</li>
+<li>End Recipient: Pavel Schulz-Staude</li>
 </ul>
 </section>
 <section id="email-to-customer-1" class="slide level2 scrollable">
@@ -1019,11 +1019,11 @@ Column Team</p>
 <p>Hello Herr Philipp Krebs,</p>
 <p>We are reaching out regarding an URGENT FRAUD INVESTIGATION related to incoming ACH transfer that your account received on 05/04/2023.</p>
 <ul>
-<li><p>ACH Transfer ID: acht_2PJ01uHSLNCOe2bZvud67EjHOty</p></li>
-<li><p>Trace Number: 091000018873580</p></li>
-<li><p>Amount: <strong>$289,527.45</strong></p></li>
-<li><p>Effective Date: May 4, 2023</p></li>
-<li><p>Originating Bank: Wells Fargo</p></li>
+<li>ACH Transfer ID: acht_2PJ01uHSLNCOe2bZvud67EjHOty</li>
+<li>Trace Number: 091000018873580</li>
+<li>Amount: <strong>$289,527.45</strong></li>
+<li>Effective Date: May 4, 2023</li>
+<li>Originating Bank: Wells Fargo</li>
 </ul>
 <p>Wells Fargo reached out and reported that their customer was a victim of a <a href="https://www.fbi.gov/how-we-can-help-you/scams-and-safety/common-frauds-and-scams/business-email-compromise">Business Email Compromise (BEC)</a> scam. They are alleging that this <strong>$289,527.45</strong> transfer was unauthorized and fraudulent, and are requesting an IMMEDIATE return of these funds.</p>
 <p>To determine the legitimacy of this transaction, we are launching an investigation and need the following evidence/information immediately:</p>
@@ -1035,8 +1035,8 @@ Column Team</p>
 </ul></li>
 <li>Sender information:
 <ul>
-<li><p>Relationship to Wells Fargo customer</p></li>
-<li><p>How long you been doing business with this party</p></li>
+<li>Relationship to Wells Fargo customer</li>
+<li>How long you been doing business with this party</li>
 </ul></li>
 <li>Recipient information:
 <ul>
@@ -1059,56 +1059,148 @@ Column Team</p>
 <h1>PROBLEM 4</h1>
 
 </section>
+<section id="application" class="slide level2">
+<h2>Application</h2>
+<h3 id="day-in-the-life-with-column-implementing-payment-ops-case-management-system">Day in the Life with Column Implementing Payment Ops Case Management System</h3>
+<p>Monday Morning, 9:00 AM</p>
+<ul>
+<li><p>Slack notification sent to #payment-ops channel</p>
+<ul>
+<li>Summary of open cases, new overnight/weekend, at-risk items</li>
+</ul></li>
+</ul>
+<!-- -->
+<ul>
+<li><p>Jane logs into dashboard:</p>
+<ul>
+<li>Personalized view shows 8 assigned cases, sorted by SLA urgency, tagged with key words</li>
+<li>Wire transfer issue with 2 hours remaining, highlighted in red at the top, Slack notification about time warning</li>
+</ul></li>
+<li><p>Mike’s Slack status set to SICK</p>
+<ul>
+<li>System automatically detected status change overnight, redistributed 3 urgent cases to 2 other coworkers</li>
+<li>Non-urgent cases remain in his queue for his return</li>
+</ul></li>
+<li><p>Alex finishes his cases early</p>
+<ul>
+<li>Unassigned Queue has 5 new cases, he self assigns ACH issues (his specialty)</li>
+<li>Moved from general queue to his personal dashboard</li>
+</ul></li>
+<li><p>Case introduced via email, Jane manually creates case via Google Form, auto imports into Google Sheets</p></li>
+</ul>
+<h3 id="refresh-system">Refresh System</h3>
+<ul>
+<li>Overnight email processor runs every 5 minutes, converting emails into cases</li>
+<li>Auto categorizes by priority based on urgency keywords (ex. fraud highly urgent)</li>
+<li>Cases signed to team members, with sick/OOO skipped</li>
+<li>Cases approaching SLA thresholds flagged “At Risk”</li>
+<li>Slack notification sent out periodically regarding flagged cases</li>
+</ul>
+<h3 id="team-workflow">Team Workflow</h3>
+<ul>
+<li>Start with prioritized cases</li>
+<li>Update status as you progress (New -&gt; In Progress -&gt; …)</li>
+<li>No more lost emails, everything flows into central system</li>
+<li>No need for individual case status meetings, can be seen on dashboard</li>
+</ul>
+</section>
 <section id="approach" class="slide level2 scrollable">
 <h2>Approach</h2>
-<p>Use Google Workspace tools (Sheets, Gmail, Apps Script) to create centralized case management system. Standardizes cases with unique IDs, automates Gmail and Slack case related information, scraping relevant information, SLA monitoring, and maintains clear communication through all channels. Ensures nothing is missed without third-party software purchases.</p>
+<p>Use Google Workspace tools (Sheets, Gmail, Apps Script) to create centralized case management system. Standardizes cases with unique IDs, automates Gmail and Slack case related information by scraping relevant information, SLA monitoring, and maintains clear communication through all channels. Ensures nothing is missed without third-party software purchases.</p>
+<p>(Assuming internal case information present in Slack, but also used for notifications/internal communication)</p>
 <ul>
-<li><p>Set up Google Sheets by editing App Script to log:</p>
+<li>Set up Google Sheets by editing App Script to log:
 <ol type="1">
 <li>automated email processing (every 5 mins)</li>
 <li>SLA monitoring &amp; breach detection (hourly)</li>
 <li>communication</li>
 <li>Slack notifications</li>
 </ol></li>
-<li><p>Configure Slack to process cases directly</p>
+<li>Configure Slack to process cases directly
 <ol type="1">
 <li>Check case details</li>
 <li>View assigned cases</li>
 <li>Update status/notes</li>
 </ol></li>
-<li><p>Integrate Gmail to forward payment-ops related emails to spreadsheet</p></li>
+<li>Integrate Gmail to forward payment-ops related emails to spreadsheet</li>
 </ul>
+</section>
+<section id="architecture-diagram" class="slide level2">
+<h2><strong>Architecture Diagram</strong></h2>
+<div class="scrollable">
+<iframe src="arcitecturediagram.html" width="100%" height="700px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+</iframe>
+</div>
 </section>
 <section id="key-features" class="slide level2 scrollable">
 <h2>Key Features</h2>
 <ol type="1">
 <li>Case Tracking
 <ul>
-<li><p>Unique case ID (MMDDYYYY-XXX)</p></li>
-<li><p>Gmail and Slack linked</p></li>
+<li>Unique case ID (YYYYMMDD-XXX)</li>
+<li>Gmail and Slack linked</li>
 </ul></li>
 <li>Communication: all emails/Slack messages logged and easily searchable</li>
 <li>SLA Monitoring
 <ul>
-<li><p>Automated breach alerts, at-risk flags</p></li>
-<li><p>Hourly SLA checks</p></li>
+<li>Automated breach alerts, at-risk flags</li>
+<li>Hourly SLA checks</li>
 </ul></li>
+<li>Slack summary notifications, SLA threshold warnings</li>
 <li>Analytics
 <ul>
-<li><p>Dashboard with cases by status, type, priority</p></li>
-<li><p>SLA compliance metric</p></li>
+<li>Dashboard with cases by status, type, priority</li>
+<li>SLA compliance metric</li>
 </ul></li>
 </ol>
 </section>
 <section id="dashboard" class="slide level2">
 <h2>Dashboard</h2>
-
-<img data-src="images/lol.jpeg" class="r-stretch"></section></section>
+<div class="scrollable">
+<iframe src="dashboard.html" width="100%" height="700px" style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+</iframe>
+</div>
+</section>
+<section id="automation-example-email-processing" class="slide level2">
+<h2>Automation Example: Email Processing</h2>
+<p><strong>Gmail Auto-Processing (Run Every 5 Minutes)</strong></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a></a><span class="kw">function</span> <span class="fu">processInboundEmails</span>() {</span>
+<span id="cb8-2"><a></a>  <span class="co">// searches for unprocessed payment ops emails</span></span>
+<span id="cb8-3"><a></a>  <span class="kw">const</span> query <span class="op">=</span> <span class="st">'to:payment-ops@column.com is:unread'</span><span class="op">;</span></span>
+<span id="cb8-4"><a></a>  <span class="kw">const</span> threads <span class="op">=</span> GmailApp<span class="op">.</span><span class="fu">search</span>(query<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">50</span>)<span class="op">;</span></span>
+<span id="cb8-5"><a></a>  </span>
+<span id="cb8-6"><a></a>  threads<span class="op">.</span><span class="fu">forEach</span>(thread <span class="kw">=&gt;</span> {</span>
+<span id="cb8-7"><a></a>    <span class="kw">const</span> firstMessage <span class="op">=</span> thread<span class="op">.</span><span class="fu">getMessages</span>()[<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb8-8"><a></a>    <span class="kw">const</span> threadId <span class="op">=</span> thread<span class="op">.</span><span class="fu">getId</span>()<span class="op">;</span></span>
+<span id="cb8-9"><a></a>    </span>
+<span id="cb8-10"><a></a>    <span class="co">// checks if case already exists for this thread</span></span>
+<span id="cb8-11"><a></a>    <span class="cf">if</span> (<span class="op">!</span><span class="fu">caseExistsForThread</span>(threadId)) {</span>
+<span id="cb8-12"><a></a>      <span class="co">// extracting info </span></span>
+<span id="cb8-13"><a></a>      <span class="kw">const</span> caseData <span class="op">=</span> {</span>
+<span id="cb8-14"><a></a>        <span class="dt">priority</span><span class="op">:</span> <span class="fu">detectPriority</span>(firstMessage<span class="op">.</span><span class="fu">getSubject</span>())<span class="op">,</span></span>
+<span id="cb8-15"><a></a>        <span class="dt">caseType</span><span class="op">:</span> <span class="fu">detectType</span>(firstMessage<span class="op">.</span><span class="fu">getSubject</span>())<span class="op">,</span></span>
+<span id="cb8-16"><a></a>        <span class="dt">customerName</span><span class="op">:</span> firstMessage<span class="op">.</span><span class="fu">getFrom</span>()<span class="op">.</span><span class="fu">split</span>(<span class="st">'&lt;'</span>)[<span class="dv">0</span>]<span class="op">.</span><span class="fu">trim</span>()<span class="op">,</span></span>
+<span id="cb8-17"><a></a>        <span class="dt">customerEmail</span><span class="op">:</span> <span class="fu">extractEmail</span>(firstMessage<span class="op">.</span><span class="fu">getFrom</span>())<span class="op">,</span></span>
+<span id="cb8-18"><a></a>        <span class="dt">subject</span><span class="op">:</span> firstMessage<span class="op">.</span><span class="fu">getSubject</span>()<span class="op">,</span></span>
+<span id="cb8-19"><a></a>        <span class="dt">description</span><span class="op">:</span> firstMessage<span class="op">.</span><span class="fu">getPlainBody</span>()<span class="op">.</span><span class="fu">substring</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">500</span>)<span class="op">,</span></span>
+<span id="cb8-20"><a></a>        <span class="dt">gmailThreadId</span><span class="op">:</span> threadId</span>
+<span id="cb8-21"><a></a>      }<span class="op">;</span></span>
+<span id="cb8-22"><a></a>      </span>
+<span id="cb8-23"><a></a>      <span class="kw">const</span> caseId <span class="op">=</span> <span class="fu">createNewCase</span>(caseData)<span class="op">;</span></span>
+<span id="cb8-24"><a></a>      </span>
+<span id="cb8-25"><a></a>      <span class="co">// label email, mark as read</span></span>
+<span id="cb8-26"><a></a>      thread<span class="op">.</span><span class="fu">addLabel</span>(GmailApp<span class="op">.</span><span class="fu">getUserLabelByName</span>(<span class="st">'Payment Ops Cases'</span>))<span class="op">;</span></span>
+<span id="cb8-27"><a></a>      thread<span class="op">.</span><span class="fu">markRead</span>()<span class="op">;</span></span>
+<span id="cb8-28"><a></a>    }</span>
+<span id="cb8-29"><a></a>  })<span class="op">;</span></span>
+<span id="cb8-30"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section></section>
+<section>
 <section id="llm-prompts" class="title-slide slide level1 center scrollable">
 <h1>LLM PROMPTS</h1>
 <p>General:</p>
 <ol type="1">
-<li>What program to use to explore databases?</li>
+<li>What program to use to explore ach/wire transfer databases?</li>
 <li>General instructions on applying SQL to RStudio and Quarto presentations</li>
 </ol>
 <p>Question One: N/A</p>
@@ -1118,13 +1210,166 @@ Column Team</p>
 </ol>
 <p>Question Three:</p>
 <ol type="1">
-<li>Steps are taken when BEC scam is being investigated</li>
+<li>Steps taken when BEC scam is being investigated</li>
 <li>What information is required (originator/receiver) when BEC scam is being investigated?</li>
 </ol>
-<p>Question Four:</p>
+</section>
+<section id="question-four" class="slide level2 scrollable">
+<h2>Question Four:</h2>
 <ol type="1">
+<li>I’m creating a dashboard that integrates Google Workspace tools to create a centralized case management system for payment operations. The cases come in on Gmail and I want to automate everything to ensure that no cases get lost and priority goes to urgent/SLA timed cases. I also want to integrate Slack for notifcations/updates/internal notes. What general data would be necessary if I wanted to use Google Sheets as my data base? What other info?</li>
+<li>Create architecture diagram called Column Payment Ops Case Study Architecture Diagram. 4 squares moving down page with arrows pointing downward:
+<ol type="1">
+<li>Input Layer (Case Creation)
+<ol type="1">
+<li>Gmail Automation
+<ul>
+<li>Monitors and automatically creates cases from payment-ops@column.com</li>
+<li>Links threads to cases</li>
+<li>Extracts priority &amp; type from subject</li>
+</ul></li>
+<li>Slack Integration
+<ul>
+<li>Slash commands for case creation</li>
+<li>Quick status updates</li>
+<li>Thread URL linking</li>
+<li>Real-time notifications</li>
+</ul></li>
+<li>Google Form
+<ul>
+<li>Manual case creation</li>
+<li>Standardized data entry</li>
+</ul></li>
+<li>API Webhooks
+<ul>
+<li><p>External system integration</p></li>
+<li><p>Automated case triggering</p></li>
+<li><p>Audit trail logging</p></li>
+</ul></li>
+</ol></li>
+<li>Data Layer (Google Sheets)
+<ol type="1">
+<li>Cases Sheet
+<ul>
+<li>Case ID (auto-generated)</li>
+<li>Priority, Status, Type</li>
+<li>Customer &amp; Bank info</li>
+<li>Subject, Description</li>
+<li>Assigned To, SLA Deadline</li>
+<li>Email/Slack thread links</li>
+<li>Internal notes</li>
+</ul></li>
+<li>Communications Log
+<ul>
+<li>Log ID, Case ID</li>
+<li>Timestamp, Direction</li>
+<li>Channel (Email/Slack/Phone)</li>
+<li>Contact details</li>
+<li>Message content</li>
+<li>Response tracking</li>
+</ul></li>
+<li><strong>SLA Tracking</strong>
+<ul>
+<li>Case ID, Priority</li>
+<li>SLA deadline &amp; status</li>
+<li>Time remaining</li>
+<li>Resolution time</li>
+<li>Performance metrics</li>
+</ul></li>
+<li>Metrics Dashboard
+<ul>
+<li><p>Real-time KPIs</p></li>
+<li><p>Cases by status</p></li>
+<li><p>SLA performance</p></li>
+<li><p>Team workload</p></li>
+<li><p>Automated charts</p></li>
+</ul></li>
+</ol></li>
+<li>Processing Layer (Apps Script Automation)
+<ol type="1">
+<li>Email Processor
+<ul>
+<li>Runs every 5 minutes</li>
+<li>Parses unread emails</li>
+<li>Auto-categorizes requests</li>
+<li>Creates/updates cases</li>
+</ul></li>
+<li>SLA Monitor
+<ul>
+<li>Runs hourly</li>
+<li>Calculates time remaining</li>
+<li>Identifies at-risk cases</li>
+<li>Sends breach alerts</li>
+</ul></li>
+<li>Metrics Calculator
+<ul>
+<li>Updates dashboard formula</li>
+<li>Aggregates performance data</li>
+<li>Tracks resolution times</li>
+<li>Generates charts</li>
+</ul></li>
+<li>Notification Engine
+<ul>
+<li><p>Slack webhook integration</p></li>
+<li><p>Email notifications</p></li>
+<li><p>Custom alert rules</p></li>
+</ul></li>
+</ol></li>
+<li>Output Layer (User Interface &amp; Reports)
+<ol type="1">
+<li>Live Dashboard
+<ul>
+<li><p>Real-time case status</p></li>
+<li><p>Visual SLA indicators</p></li>
+<li><p>Filterable views</p></li>
+<li><p>Team workload distribution</p></li>
+</ul></li>
+<li>Slack Notifications
+<ul>
+<li><p>New case alerts</p></li>
+<li><p>Status change updates</p></li>
+<li><p>SLA breach warnings</p></li>
+</ul></li>
+<li>Email Reports
+<ul>
+<li><p>Weekly performance reports</p></li>
+<li><p>Custom report generation</p></li>
+<li><p>Automated distribution</p></li>
+<li><p>Attachment support</p></li>
+</ul></li>
+<li>Archive System
+<ul>
+<li><p>Auto-archive closed cases</p></li>
+<li><p>Google Drive storage</p></li>
+</ul></li>
+</ol></li>
+</ol></li>
+</ol>
+</section>
+<section id="question-four-cont." class="slide level2 scrollable">
+<h2>Question Four (cont.)</h2>
+<ol start="3" type="1">
 <li>Create interactive dashboard for Payment Operations, called Column Payment Ops. Home page should be Dashboard with tabs on the left: All Cases, Communications, SLA Tracking, Analytics. On dashboard, 4 metrics at top of screen: Open Cases, Resolved Today, At Risk, Avg Response Time (hr). Should all have correlated values corresponding, and small metric under comparing to yesterday/average/improvements. Below is Active Cases flagged by: My Cases, High Priority, At Risk. Searchable, scrollable table with columns: case ID, priority tag, status, customer, subject, assigned to, SLA status and time ago created. Add corresponding colors to tags.</li>
-<li></li>
+<li>Given following pseudo code, give script for email to case automation in Google Apps Script
+<ul>
+<li><p>Every 5 minutes: Get all unread emails sent to payment-ops@column.com</p></li>
+<li><p>For each email:</p>
+<ul>
+<li><p>Check if already created a case for this email thread</p></li>
+<li><p>If no case exists</p>
+<ul>
+<li>Extract information from email</li>
+<li>Detect priority (check for “urgent” keywords)</li>
+<li>Detect case type (wire, ACH, etc.)</li>
+<li>Get customer name and email</li>
+<li>Get email subject and body</li>
+</ul></li>
+<li><p>Create new case with extracted information</p></li>
+<li><p>Mark email as processed (add label, mark as read)</p></li>
+<li><p>Send notification to team via Slack</p></li>
+</ul></li>
+<li><p>End</p></li>
+</ul></li>
 </ol>
 
 <div class="quarto-auto-generated-content">
@@ -1132,7 +1377,7 @@ Column Team</p>
 
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 

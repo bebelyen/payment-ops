@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Ops Case Management Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        .architecture {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .layer {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 24px;
+            border-left: 4px solid #4299e1;
+        }
+        .layer-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .layer-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #4299e1;
+            border-radius: 50%;
+        }
+        .components {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .component {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .component:hover {
+            border-color: #4299e1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.2);
+        }
+        .component-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .icon-blue { background: #ebf8ff; }
+        .icon-green { background: #f0fff4; }
+        .icon-yellow { background: #fffbeb; }
+        .icon-red { background: #fff5f5; }
+        .icon-purple { background: #faf5ff; }
+        .component-name {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 15px;
+        }
+        .component-desc {
+            color: #718096;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .flow-arrow {
+            text-align: center;
+            color: #4299e1;
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        .data-stores {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .data-store {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            border: 2px dashed #cbd5e0;
+        }
+        .data-store-name {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .data-store-fields {
+            font-size: 12px;
+            color: #718096;
+            line-height: 1.6;
+        }
+        .integration-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        .integration-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .integration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .integration-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background: #edf2f7;
+            border-radius: 12px;
+        }
+        .legend-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 12px;
+        }
+        .legend-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+        .legend-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Column Payment Ops Case Study Architecture Diagram</h1>
+        <p class="subtitle">Bebel Yen</p>
+        <p class="subtitle">Google Workspace + Slack Integration - Third-Party Software</p>
+
+        <div class="architecture">
+            <!-- Input Layer -->
+            <div class="layer">
+                <div class="layer-title">Input Layer (Case Creation)</div>
+                <div class="components">
+                    <div class="component">
+                        <div class="component-header">
+                            <div class="component-name">Gmail Automation</div>
+                        </div>
+                        <div class="component-desc">
+                            • Monitors and automatically creates cases from payment-ops@column.com<br>
+                            • Links threads to cases<br>
+                            • Extracts priority & type from subject
+                        </div>
+                    </div>
+                    
+                    <div class="component">
+                        <div class="component-header">
+                            <div class="component-name">Slack Integration</div>
+                        </div>
+                        <div class="component-desc">
+                            • Slash commands for case creation<br>
+                            • Quick status updates<br>
+                            • Thread URL linking<br>
+                            • Real-time notifications
+                        </div>
+                    </div>
+                    
+                    <div class="component">
+                        <div class="component-header">
+                            <div class="component-name">Google Form</div>
+                        </div>
+                        <div class="component-desc">
+                            • Manual case creation<br>
+                            • Standardized data entry
+                        </div>
+                    </div>
+                    
+                    <div class="component">
+                        <div class="component-header">
+                            <div class="component-name">API Webhooks</div>
+                        </div>
+                        <div class="component-desc">
+                            • External system integration<br>
+                            • Automated case triggering<br>
+                            • Audit trail logging
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flow-arrow">⬇️</div>
+            
+            <!-- Core Data Layer -->
+            <div class="layer">
+                <div class="layer-title">Data Layer (Google Sheets)</div>
+                <div class="data-stores">
+                    <div class="data-store">
+                        <div class="data-store-name">Cases Sheet</div>
+                        <div class="data-store-fields">
+                            • Case ID (auto-generated)<br>
+                            • Priority, Status, Type<br>
+                            • Customer & Bank info<br>
+                            • Subject, Description<br>
+                            • Assigned To, SLA Deadline<br>
+                            • Email/Slack thread links<br>
+                            • Internal notes
+                        </div>
+                    </div>
+                    
+                    <div class="data-store">
+                        <div class="data-store-name">Communications Log</div>
+                        <div class="data-store-fields">
+                            • Log ID, Case ID<br>
+                            • Timestamp, Direction<br>
+                            • Channel (Email/Slack/Phone)<br>
+                            • Contact details<br>
+                            • Message content<br>
+                            • Response tracking
+                        </div>
+                    </div>
+                    
+                    <div class="data-store">
+                        <div class="data-store-name">SLA Tracking</div>
+                        <div class="data-store-fields">
+                            • Case ID, Priority<br>
+                            • SLA deadline & status<br>
+                            • Time remaining<br>
+                            • Resolution time<br>
+                            • Performance metrics
+                        </div>
+                    </div>
+                    
+                    <div class="data-store">
+                        <div class="data-store-name">Metrics Dashboard</div>
+                        <div class="data-store-fields">
+                            • Real-time KPIs<br>
+                            • Cases by status<br>
+                            • SLA performance<br>
+                            • Team workload<br>
+                            • Automated charts
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flow-arrow">⬇️</div>
+            
+            <!-- Processing Layer -->
+            <div class="layer">
+                <div class="layer-title">Processing Layer (Apps Script Automation)</div>
+                <div class="components">
+                    <div class="component">
+                        <div class="component-header">
+                            <div class="component-name">Email Processor</div>
+                        </div>
+                        <div class="component-desc">
+                            • Runs every 5 minutes<br>
+                            • Parses unread emails<br>
+                            • Auto-categorizes requests<br>
+                            • Creates/updates cases
+                        </div>
+                    </div>
+                    
+                    <div class="component">
+                        <div class="component-header">
+                            <div class="component-name">SLA Monitor</div>
+                        </div>
+                        <div class="component-desc">
+                            • Runs hourly<br>
+                            • Calculates time remaining<br>
+                            • Identifies at-risk cases<br>
+                            • Sends breach alerts
+                        </div>
+                    </div>
+                    
+                    <div class="component">
+                        <div class="component-header">
+                            <div class="component-name">Metrics Calculator</div>
+                        </div>
+                        <div class="component-desc">
+                            • Updates dashboard formulas<br>
+                            • Aggregates performance data<br>
+                            • Tracks resolution times<br>
+                            • Generates charts
+                        </div>
+                    </div>
+                    
+                    <div class="component">
+                        <div class="component-header">
+                            <div class="component-name">Notification Engine</div>
+                        </div>
+                        <div class="component-desc">
+                            • Slack webhook integration<br>
+                            • Email notifications<br>
+                            • Custom alert rules
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flow-arrow">⬇️</div>
+            
+            <!-- Output Layer -->
+            <div class="layer">
+                <div class="layer-title">Output Layer (User Interface & Reports)</div>
+                <div class="components">
+                    <div class="component">
+                        <div class="component-header">
+                            <div class="component-name">Live Dashboard</div>
+                        </div>
+                        <div class="component-desc">
+                            • Real-time case status<br>
+                            • Visual SLA indicators<br>
+                            • Filterable views<br>
+                            • Team workload distribution
+                        </div>
+                    </div>
+                    
+                    <div class="component">
+                        <div class="component-header">
+                            <div class="component-name">Slack Notifications</div>
+                        </div>
+                        <div class="component-desc">
+                            • New case alerts<br>
+                            • Status change updates<br>
+                            • SLA breach warnings
+                        </div>
+                    </div>
+                    
+                    <div class="component">
+                        <div class="component-header">
+                            <div class="component-name">Email Reports</div>
+                        </div>
+                        <div class="component-desc">
+                            • Weekly performance reports<br>
+                            • Custom report generation<br>
+                            • Automated distribution<br>
+                            • Attachment support
+                        </div>
+                    </div>
+                    
+                    <div class="component">
+                        <div class="component-header">
+                            <div class="component-name">Archive System</div>
+                        </div>
+                        <div class="component-desc">
+                            • Auto-archive closed cases<br>
+                            • Google Drive storage<br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

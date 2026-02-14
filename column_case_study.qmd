@@ -109,15 +109,10 @@ I am reaching out from Column regarding an ACH transaction that was returned by 
 **TRANSACTION DETAILS:**
 
 -   Original Trace Number: 121145340551340
-
 -   Return Trace Number: 061120080831693
-
 -   Effective Date: May 1, 2023
-
 -   Amount: \$500.00
-
 -   Originator (our record): Dorothe Bauer-Holsten
-
 -   Receiver: Prof. Reza Trüb
 
 We believe the discrepancy between what the customer saw the originating company name as "Soccer Club LLC" and "Dorothe Bauer-Holsten" (our record) to be the cause for the return.
@@ -147,15 +142,10 @@ Upon investigation we found that the transfer was returned by the receiving bank
 **TRANSACTION DETAILS:**
 
 -   Amount: \$500.00
-
 -   Effective Date: May 1, 2023
-
 -   Originator Name (our records): Dorothe Bauer-Holsten
-
 -   Receiver: Prof. Reza Trüb
-
 -   Receiving Bank Routing: 061120084
-
 -   Trace Number: 121145340551340
 
 You mentioned the receiving bank showed "Soccer Club LLC" as the originator instead of "Dorothe Bauer-Holsten." We're investigating this with the receiving bank to understand exactly what information they had on file.
@@ -186,17 +176,13 @@ Column Team
 **ISSUE**
 
 -   Receiving bank shows ORIGINATOR COMPANY: Soccer Club LLC 
-
 -   Column shows ORIGINATOR COMPANY: Dorthe Bauer-Holsten
-
 -   ACH RETURN CODE: R23, Credit Entry Refused by Receiver (trace #: 061120080831693)
 
 **ROOT CAUSE**
 
 -   Discrepancy in company name triggered receiver (or bank) to reject transaction
-
 -   Possible Reasons
-
     -   Customer incorrectly entered information, putting "Soccer Club LLC" in fields
 
     -   Didn't recognize "Soccer Club LLC" as legitimate sender
@@ -248,15 +234,10 @@ WHERE ach_transfer_id = 'acht_2PBthBuXNLs5aeK0ceeCEJGY4SP';
 ## Queries & Approach
 
 -   Query 1: exact transaction
-
 -   Query 2: other transactions from same customer
-
     -   Search for any patterns of large transfers or if this is unusual
-
     -   FOUND: has other large transfers
-
 -   Query 3: other transactions to same receiver
-
     -   Search if Pavel Schulz-Staude regularly receives payments through this Column customer
 
     -   FOUND: first transaction
@@ -328,21 +309,13 @@ ORDER BY effective_on DESC;
 INCOMING ACH TRANSFER (to Column):
 
 -   ACH Transfer ID: acht_2PJ01uHSLNCOe2bZvud67EjHOty
-
 -   Trace Number: 091000018873580
-
 -   Amount: \$289,527.45
-
 -   Effective Date: May 4, 2023
-
 -   Status: Settled
-
 -   Transfer Type: Incoming (received by Column customer)
-
 -   Originating Bank: Wells Fargo
-
 -   Column Customer (Receiver): Herr Philipp Krebs
-
 -   End Recipient: Pavel Schulz-Staude
 
 ## Email to Customer
@@ -354,13 +327,9 @@ Hello Herr Philipp Krebs,
 We are reaching out regarding an URGENT FRAUD INVESTIGATION related to incoming ACH transfer that your account received on 05/04/2023.
 
 -   ACH Transfer ID: acht_2PJ01uHSLNCOe2bZvud67EjHOty
-
 -   Trace Number: 091000018873580
-
 -   Amount: **\$289,527.45**
-
 -   Effective Date: May 4, 2023
-
 -   Originating Bank: Wells Fargo
 
 Wells Fargo reached out and reported that their customer was a victim of a [Business Email Compromise (BEC)](https://www.fbi.gov/how-we-can-help-you/scams-and-safety/common-frauds-and-scams/business-email-compromise) scam. They are alleging that this **\$289,527.45** transfer was unauthorized and fraudulent, and are requesting an IMMEDIATE return of these funds.
@@ -373,7 +342,6 @@ To determine the legitimacy of this transaction, we are launching an investigati
     -   How transaction was originally arranged (email, phone, etc)
 2.  Sender information:
     -   Relationship to Wells Fargo customer
-
     -   How long you been doing business with this party
 3.  Recipient information:
     -   Pavel Schulz-Staude's relationship to your business
@@ -393,50 +361,147 @@ Column Team
 
 # PROBLEM 4
 
+## Application 
+
+### Day in the Life with Column Implementing Payment Ops Case Management System 
+
+Monday Morning, 9:00 AM
+
+-   Slack notification sent to #payment-ops channel
+
+    -   Summary of open cases, new overnight/weekend, at-risk items
+
+<!-- -->
+
+-   Jane logs into dashboard:
+
+    -   Personalized view shows 8 assigned cases, sorted by SLA urgency, tagged with key words
+    -   Wire transfer issue with 2 hours remaining, highlighted in red at the top, Slack notification about time warning
+
+-   Mike's Slack status set to SICK
+
+    -   System automatically detected status change overnight, redistributed 3 urgent cases to 2 other coworkers
+    -   Non-urgent cases remain in his queue for his return
+
+-   Alex finishes his cases early
+
+    -   Unassigned Queue has 5 new cases, he self assigns ACH issues (his specialty)
+    -   Moved from general queue to his personal dashboard
+
+-   Case introduced via email, Jane manually creates case via Google Form, auto imports into Google Sheets
+
+### Refresh System
+
+-   Overnight email processor runs every 5 minutes, converting emails into cases
+-   Auto categorizes by priority based on urgency keywords (ex. fraud highly urgent)
+-   Cases signed to team members, with sick/OOO skipped
+-   Cases approaching SLA thresholds flagged "At Risk"
+-   Slack notification sent out periodically regarding flagged cases
+
+### Team Workflow
+
+-   Start with prioritized cases
+-   Update status as you progress (New -\> In Progress -\> ...)
+-   No more lost emails, everything flows into central system
+-   No need for individual case status meetings, can be seen on dashboard
+
 ## Approach
 
-Use Google Workspace tools (Sheets, Gmail, Apps Script) to create centralized case management system. Standardizes cases with unique IDs, automates Gmail and Slack case related information, scraping relevant information, SLA monitoring, and maintains clear communication through all channels. Ensures nothing is missed without third-party software purchases.
+Use Google Workspace tools (Sheets, Gmail, Apps Script) to create centralized case management system. Standardizes cases with unique IDs, automates Gmail and Slack case related information by scraping relevant information, SLA monitoring, and maintains clear communication through all channels. Ensures nothing is missed without third-party software purchases.
+
+(Assuming internal case information present in Slack, but also used for notifications/internal communication)
 
 -   Set up Google Sheets by editing App Script to log:
-
     1.  automated email processing (every 5 mins)
     2.  SLA monitoring & breach detection (hourly)
     3.  communication
     4.  Slack notifications
-
 -   Configure Slack to process cases directly
-
     1.  Check case details
     2.  View assigned cases
     3.  Update status/notes
-
 -   Integrate Gmail to forward payment-ops related emails to spreadsheet
+
+## **Architecture Diagram**
+
+::: scrollable
+```{=html}
+<iframe src="arcitecturediagram.html" 
+        width="100%" 
+        height="700px" 
+        style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+</iframe>
+```
+:::
 
 ## Key Features
 
 1.  Case Tracking
-    -   Unique case ID (MMDDYYYY-XXX)
-
+    -   Unique case ID (YYYYMMDD-XXX)
     -   Gmail and Slack linked
 2.  Communication: all emails/Slack messages logged and easily searchable
 3.  SLA Monitoring
     -   Automated breach alerts, at-risk flags
-
     -   Hourly SLA checks
-4.  Analytics
+4.  Slack summary notifications, SLA threshold warnings
+5.  Analytics
     -   Dashboard with cases by status, type, priority
-
     -   SLA compliance metric
 
 ## Dashboard
 
-![](images/lol.jpeg)
+::: scrollable
+```{=html}
+<iframe src="dashboard.html" 
+        width="100%" 
+        height="700px" 
+        style="border:none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+</iframe>
+```
+:::
+
+## Automation Example: Email Processing
+
+**Gmail Auto-Processing (Run Every 5 Minutes)**
+
+``` javascript
+function processInboundEmails() {
+  // searches for unprocessed payment ops emails
+  const query = 'to:payment-ops@column.com is:unread';
+  const threads = GmailApp.search(query, 0, 50);
+  
+  threads.forEach(thread => {
+    const firstMessage = thread.getMessages()[0];
+    const threadId = thread.getId();
+    
+    // checks if case already exists for this thread
+    if (!caseExistsForThread(threadId)) {
+      // extracting info 
+      const caseData = {
+        priority: detectPriority(firstMessage.getSubject()),
+        caseType: detectType(firstMessage.getSubject()),
+        customerName: firstMessage.getFrom().split('<')[0].trim(),
+        customerEmail: extractEmail(firstMessage.getFrom()),
+        subject: firstMessage.getSubject(),
+        description: firstMessage.getPlainBody().substring(0, 500),
+        gmailThreadId: threadId
+      };
+      
+      const caseId = createNewCase(caseData);
+      
+      // label email, mark as read
+      thread.addLabel(GmailApp.getUserLabelByName('Payment Ops Cases'));
+      thread.markRead();
+    }
+  });
+}
+```
 
 # LLM PROMPTS
 
 General:
 
-1.  What program to use to explore databases?
+1.  What program to use to explore ach/wire transfer databases?
 2.  General instructions on applying SQL to RStudio and Quarto presentations
 
 Question One: N/A
@@ -447,13 +512,139 @@ Question Two:
 
 Question Three:
 
-1.  Steps are taken when BEC scam is being investigated
+1.  Steps taken when BEC scam is being investigated
 2.  What information is required (originator/receiver) when BEC scam is being investigated?
 
-Question Four:
+## Question Four: 
 
-1.  Create interactive dashboard for Payment Operations, called Column Payment Ops. Home page should be Dashboard with tabs on the left: All Cases, Communications, SLA Tracking, Analytics. On dashboard, 4 metrics at top of screen: Open Cases, Resolved Today, At Risk, Avg Response Time (hr). Should all have correlated values corresponding, and small metric under comparing to yesterday/average/improvements. Below is Active Cases flagged by: My Cases, High Priority, At Risk. Searchable, scrollable table with columns: case ID, priority tag, status, customer, subject, assigned to, SLA status and time ago created. Add corresponding colors to tags.
-2.  
+1.  I'm creating a dashboard that integrates Google Workspace tools to create a centralized case management system for payment operations. The cases come in on Gmail and I want to automate everything to ensure that no cases get lost and priority goes to urgent/SLA timed cases. I also want to integrate Slack for notifcations/updates/internal notes. What general data would be necessary if I wanted to use Google Sheets as my data base? What other info?
+2.  Create architecture diagram called Column Payment Ops Case Study Architecture Diagram. 4 squares moving down page with arrows pointing downward:
+    1.  Input Layer (Case Creation)
+        1.  Gmail Automation
+            -   Monitors and automatically creates cases from payment-ops\@column.com
+            -   Links threads to cases
+            -   Extracts priority & type from subject
+        2.  Slack Integration
+            -   Slash commands for case creation
+            -   Quick status updates
+            -   Thread URL linking
+            -   Real-time notifications
+        3.  Google Form
+            -   Manual case creation
+            -   Standardized data entry
+        4.  API Webhooks
+            -   External system integration
+
+            -   Automated case triggering
+
+            -   Audit trail logging
+    2.  Data Layer (Google Sheets)
+        1.  Cases Sheet
+            -   Case ID (auto-generated)
+            -   Priority, Status, Type
+            -   Customer & Bank info
+            -   Subject, Description
+            -   Assigned To, SLA Deadline
+            -   Email/Slack thread links
+            -   Internal notes
+        2.  Communications Log
+            -   Log ID, Case ID
+            -   Timestamp, Direction
+            -   Channel (Email/Slack/Phone)
+            -   Contact details
+            -   Message content
+            -   Response tracking
+        3.  **SLA Tracking**
+            -   Case ID, Priority
+            -   SLA deadline & status
+            -   Time remaining
+            -   Resolution time
+            -   Performance metrics
+        4.  Metrics Dashboard
+            -   Real-time KPIs
+
+            -   Cases by status
+
+            -   SLA performance
+
+            -   Team workload
+
+            -   Automated charts
+    3.  Processing Layer (Apps Script Automation)
+        1.  Email Processor
+            -   Runs every 5 minutes
+            -   Parses unread emails
+            -   Auto-categorizes requests
+            -   Creates/updates cases
+        2.  SLA Monitor
+            -   Runs hourly
+            -   Calculates time remaining
+            -   Identifies at-risk cases
+            -   Sends breach alerts
+        3.  Metrics Calculator
+            -   Updates dashboard formula
+            -   Aggregates performance data
+            -   Tracks resolution times
+            -   Generates charts
+        4.  Notification Engine
+            -   Slack webhook integration
+
+            -   Email notifications
+
+            -   Custom alert rules
+    4.  Output Layer (User Interface & Reports)
+        1.  Live Dashboard
+            -   Real-time case status
+
+            -   Visual SLA indicators
+
+            -   Filterable views
+
+            -   Team workload distribution
+        2.  Slack Notifications
+            -   New case alerts
+
+            -   Status change updates
+
+            -   SLA breach warnings
+        3.  Email Reports
+            -   Weekly performance reports
+
+            -   Custom report generation
+
+            -   Automated distribution
+
+            -   Attachment support
+        4.  Archive System
+            -   Auto-archive closed cases
+
+            -   Google Drive storage
+
+##  Question Four (cont.)
+
+3.  Create interactive dashboard for Payment Operations, called Column Payment Ops. Home page should be Dashboard with tabs on the left: All Cases, Communications, SLA Tracking, Analytics. On dashboard, 4 metrics at top of screen: Open Cases, Resolved Today, At Risk, Avg Response Time (hr). Should all have correlated values corresponding, and small metric under comparing to yesterday/average/improvements. Below is Active Cases flagged by: My Cases, High Priority, At Risk. Searchable, scrollable table with columns: case ID, priority tag, status, customer, subject, assigned to, SLA status and time ago created. Add corresponding colors to tags.
+4.  Given following pseudo code, give script for email to case automation in Google Apps Script
+    -   Every 5 minutes: Get all unread emails sent to payment-ops\@column.com
+
+    -   For each email:
+
+        -   Check if already created a case for this email thread
+
+        -   If no case exists
+
+            -   Extract information from email
+            -   Detect priority (check for "urgent" keywords)
+            -   Detect case type (wire, ACH, etc.)
+            -   Get customer name and email
+            -   Get email subject and body
+
+        -   Create new case with extracted information
+
+        -   Mark email as processed (add label, mark as read)
+
+        -   Send notification to team via Slack
+
+    -   End
 
 ```{r}
 #| include: false
